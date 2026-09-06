@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080c14" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>보이드러너 — 궤도 combat league</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/index-oRakiURx.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-COtHzPQG.css">
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <div id="vignette"></div>
+    <div id="damage"></div>
+    <header>
+      <a class="brand" href="./" aria-label="보이드러너 홈"
+        ><svg viewBox="0 0 42 34">
+          <path d="M1 3h10l10 18L31 3h10L21 34Z" fill="currentColor" />
+          <path d="M15 3h12l-6 10Z" fill="#ff5d32" /></svg
+        >보이드러너<span>®</span></a
+      >
+      <div class="top-meta">
+        <span class="live-dot"></span> 궤도 combat league
+        <span class="muted">//</span> <b>시즌 09</b>
+      </div>
+      <div class="top-actions">
+        <button id="sound" aria-label="사운드 토글">
+          사운드 <span id="sound-state">끔</span
+          ><span class="sound-icon">▂▅▃▇</span></button
+        ><button id="help" aria-label="조작법 보기">?</button>
+      </div>
+    </header>
+    <main id="menu">
+      <div class="intro">
+        <div class="eyebrow">
+          <span class="orange">●</span> 중력 없음. 자비 없음.
+        </div>
+        <h1>남김없이<br />모두<br /><span>끝장내라.</span></h1>
+        <p>
+          죽어가는 세계의 벼랑을 타라.<br />음속의 장벽을 부숴라. 왕좌를 차지하라.
+        </p>
+        <div class="event">
+          <span class="event-icon">↗</span>
+          <div>
+            <span class="micro">현재 이벤트</span
+            ><strong>헤일로 서킷</strong
+            ><span class="location">네레이드 · 갈라진 해양 세계</span>
+          </div>
+          <span class="event-class">등급<br /><b>Ω</b></span>
+        </div>
+      </div>
+      <div class="world-label">
+        <span class="orange">01 /</span> 네레이드 배제 구역
+        <div>고도 12,840 M <span>−218°C</span></div>
+      </div>
+      <div class="craft-caption">
+        <span id="craft-index">02</span>
+        <div>
+          <span class="micro">선택한 기체</span><b id="craft-name">레이스</b>
+        </div>
+        <i></i><span class="craft-class" id="craft-class">인터셉터</span>
+      </div>
+      <div class="bottom-menu">
+        <section class="craft-select">
+          <div class="section-line">
+            <span>기체 선택</span><span class="muted">01 — 03</span>
+          </div>
+          <div class="crafts">
+            <button class="craft" data-craft="0">
+              <span class="craft-top">01 <i>SPD / ATK</i></span
+              ><svg viewBox="0 0 100 44">
+                <path
+                  d="M50 1 58 22 82 39 57 34 50 42 43 34 18 39 42 22Z"
+                /></svg
+              ><strong>니들</strong><small>경량 / 스피더</small></button
+            ><button class="craft selected" data-craft="1">
+              <span class="craft-top">02 <i>AGI / BAL</i></span
+              ><svg viewBox="0 0 100 44">
+                <path
+                  d="M50 1 60 24 78 12 85 40 58 34 50 41 42 34 15 40 22 12 40 24Z"
+                /></svg
+              ><strong>레이스</strong
+              ><small>중형 / 인터셉터</small></button
+            ><button class="craft" data-craft="2">
+              <span class="craft-top">03 <i>DEF / RAM</i></span
+              ><svg viewBox="0 0 100 44">
+                <path
+                  d="M42 7h16l5 16 10-15h12l5 33H62l-12-5-12 5H10l5-33h12l10 15Z"
+                /></svg
+              ><strong>바스티온</strong><small>중량 / 인포서</small>
+            </button>
+          </div>
+        </section>
+        <section class="craft-stats">
+          <div>
+            <span>최고 속도</span><b id="stat-speed">960 <small>KM/H</small></b>
+          </div>
+          <div class="stat-bars">
+            <label>핸들링</label><i id="handling"></i><label>장갑</label
+            ><i id="armor"></i>
+          </div>
+          <p id="craft-desc">외과적 정밀함. 타협 없는 조작감.</p>
+        </section>
+        <section class="launch">
+          <div class="launch-meta">
+            <span>3 랩</span><span>8 명 파일럿</span><span>무기 라이브</span>
+          </div>
+          <button id="start">레이스 진입 <span>↗</span></button
+          ><span class="launch-hint">ENTER 키로 출발</span>
+        </section>
+      </div>
+      <footer>
+        <span><i class="live-dot"></i> 모든 시스템 정상</span
+        ><span>헤드폰 권장</span
+        ><span>WebGL / 실시간 3D <b>© 2186 VRC</b></span>
+      </footer>
+    </main>
+    <section id="hud" class="hidden">
+      <div class="race-top">
+        <div class="position">
+          <span class="micro">순위</span><b id="position">08</b
+          ><span>/ 08</span>
+        </div>
+        <div class="lap">
+          <span class="micro">랩</span
+          ><b><span id="lap">01</span><small> / 03</small></b>
+        </div>
+        <div class="timing">
+          <span class="micro">레이스 시간</span><b id="timer">00:00.000</b
+          ><span id="sector">헤일로 서킷 / 섹터 01</span>
+        </div>
+      </div>
+      <div id="race-message"></div>
+      <div class="race-bottom">
+        <div class="systems">
+          <div class="micro">선체 무결성 <b id="shield-val">100%</b></div>
+          <div class="meter hull"><i id="shield-bar"></i></div>
+          <div class="weapon">
+            <span id="weapon-icon">⌖</span>
+            <div>
+              <small>무기 시스템</small><b id="weapon-name">플라즈마 볼트</b>
+            </div>
+            <kbd>SPACE</kbd>
+          </div>
+          <canvas id="minimap" width="200" height="130"></canvas>
+        </div>
+        <div class="speedo">
+          <div id="drift-label">에어브레이크 작동</div>
+          <b id="speed">000</b><span>KM/H</span>
+          <div class="speed-line"></div>
+          <div class="boost-info">
+            <span>부스트 잔량</span
+            ><span><b id="boost-val">100</b>% <kbd>SHIFT</kbd></span>
+          </div>
+          <div class="meter boost"><i id="boost-bar"></i></div>
+        </div>
+      </div>
+      <div class="race-controls">
+        <span><kbd>W A S D</kbd> 조종</span
+        ><span><kbd>Q / E</kbd> 에어브레이크</span
+        ><span><kbd>SHIFT</kbd> 부스트</span><span><kbd>SPACE</kbd> 발사</span
+        ><span><kbd>ESC</kbd> 일시정지</span>
+      </div>
+    </section>
+    <div id="countdown" class="hidden"></div>
+    <div id="overlay" class="hidden">
+      <div class="modal">
+        <span class="eyebrow orange" id="modal-kicker">비행 매뉴얼</span>
+        <h2 id="modal-title">조종을 시작합니다.</h2>
+        <div id="controls-content">
+          <div class="control-row"><kbd>W / ↑</kbd><span>가속</span></div>
+          <div class="control-row">
+            <kbd>S / ↓</kbd><span>브레이크 / 감속</span>
+          </div>
+          <div class="control-row"><kbd>A D / ← →</kbd><span>조향</span></div>
+          <div class="control-row">
+            <kbd>Q / E</kbd
+            ><span>좌·우 에어브레이크. 코너에서 누르고 있으면 드리프트.</span>
+          </div>
+          <div class="control-row">
+            <kbd>SHIFT</kbd><span>부스트. 떼면 회복.</span>
+          </div>
+          <div class="control-row">
+            <kbd>SPACE</kbd><span>무기 발사 / 쉴드 작동</span>
+          </div>
+          <p>
+            주황색 무기 셀과 청록색 쉴드를 모으고, 빛나는 부스트 패드를 활용하라.
+            라이벌을 들이받고, 최단 코너를 돌고, 3랩을 살아남아라.
+          </p>
+        </div>
+        <div id="results-content" class="hidden"></div>
+        <button id="resume" class="primary">날아올라라 <span>↗</span></button
+        ><button id="exit" class="text-button hidden">행거로 복귀</button>
+      </div>
+    </div>
+    <div id="loading">
+      <span class="brand">보이드러너</span
+      ><span>비행 시스템 초기화 중…</span>
+    </div>
+    <div id="touch" class="hidden">
+      <button data-key="KeyA">◀</button><button data-key="KeyD">▶</button
+      ><button data-key="KeyW">추진</button
+      ><button data-key="ShiftLeft">부스트</button
+      ><button data-key="Space">발사</button>
+    </div>
+  </body>
+</html>

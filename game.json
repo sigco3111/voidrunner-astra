@@ -1,0 +1,8 @@
+{
+  "slug": "voidrunner-astra",
+  "title": "보이드러너 — 궤도 combat league",
+  "version": "ASTRA",
+  "description": "금이 간 해양 세계 위에서 펼쳐지는 Three.js 반중력 combat racer. Blender로 제작한 3종 호버크래프트(니들 / 레이스 / 바스티온), 부스트와 에어브레이크 드리프트, 라이벌 전투, 무기와 쉴드, 고도 강하, 커스텀 셰이더, PBR 머티리얼, 블룸, 모션 블러, 360° 3D 크래프트 쇼룸.",
+  "accent": "#ff6338",
+  "tags": ["게임", "레이서", "Three.js", "WebGL", "셰이더", "3D 모델", "ASTRA"]
+}
